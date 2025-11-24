@@ -104,7 +104,27 @@ class LinkedList:
 
         return current_node_index
         
+    '''
+    def sort(self):
+      if self.__headNode == None:
+            return 
+      
+      item_1 = self.__headNode
+      item_2 = item_1.getNextNode()
+      
+      while item_2.getNextNode() != None:
+        temp = None
+        
+        if item_2.getValue()>item_1.getValue():
+          temp = item_1
+          item_1.setNextNode(item_2.getNextNode())
+          if item_1 == self.__headNode:
+            self.__headNode = item_2
+          item_1 = item_2
+          item_2.setNextNode(item_1)
+          item_2 = temp
+        item_1 = item_2
+        item_2 = item_2.getNextNode()
+      
+'''
     
-
-
-
