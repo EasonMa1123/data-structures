@@ -20,6 +20,7 @@ class LinkedList:
     def __init__(self):
         self.__headNode = None
         self.__lastNode = None
+        self.__listLength = 0
 
     def appendNode(self,value):
         new_node = node(value)
@@ -29,6 +30,7 @@ class LinkedList:
         else:
             self.__lastNode.setNextNode(new_node)
             self.__lastNode = new_node
+        self.__listLength +=1
 
 
     def arrayLinkList(self):
@@ -43,15 +45,63 @@ class LinkedList:
         return linklist_array
     
     def listlen(self):
+        return self.__listLength
+    
+    def insertNode(self,value,index:int):
+        if index > self.__listLength:
+            return -1
+        
         if self.__headNode == None:
-            return 0
+            return -1
+        
+        new_node = node(value)
         current_node = self.__headNode
-        list_length = 0
-        while current_node != None:
-            list_length+=1
+        current_node_index = 0
+        
+        while current_node_index < index:
             current_node = current_node.getNextNode()
+            current_node_index+=1
+        
+        
+        pointer_node = current_node.getNextNode()
+        current_node.setNextNode(new_node)
+        new_node.setNextNode(pointer_node)
+        
+        self.__listLength +=1
+    
+    def findNodeValue(self,index:int):
+        if index > self.__listLength:
+            return -1
+        
+        if self.__headNode == None:
+            return -1
+        
+        current_node = self.__headNode
+        current_node_index = 0
+        
+        while current_node_index < index:
+            
+            current_node = current_node.getNextNode()
+            current_node_index+=1
+        return current_node.getValue()
+    
+    def findNodeIndex(self,value):
+        if self.__headNode == None:
+            return -1
+        current_node = self.__headNode
+        current_node_value = current_node.getValue()
+        current_node_index = 0
+        while current_node != None :
+            if  current_node_index >= self.__listLength-1:
+                return -1
+            current_node = current_node.getNextNode()
+            current_node_value = current_node.getValue()
+            current_node_index +=1
+            if current_node_value == value:
+                break
+            
 
-        return list_length
+        return current_node_index
         
     
 
