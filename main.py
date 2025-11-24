@@ -94,11 +94,12 @@ class LinkedList:
         while current_node != None :
             if  current_node_index >= self.__listLength-1:
                 return -1
+            if current_node_value == value:
+                break
             current_node = current_node.getNextNode()
             current_node_value = current_node.getValue()
             current_node_index +=1
-            if current_node_value == value:
-                break
+            
             
 
         return current_node_index
