@@ -42,14 +42,12 @@ class Tree:
                 return
             else:
                 self.placeNode(top.check_right(),value)
-    def printTree(self,root=None):
+    def printTree(self,root=None,first = True):
         
-        if root == None:
+        if root == None and first:
             root = self.__root
-        print(root.getValue())
-        if root :
-            self.printTree(root.check_left())
+        
+        if root != None:
+            self.printTree(root.check_left(),False)
             print(root.getValue())
-            self.printTree(root.check_right())
-        else:
-            return
+            self.printTree(root.check_right(),False)
