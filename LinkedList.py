@@ -115,7 +115,7 @@ class LinkedList:
         previous_node = None
         while current_node_value != value:
             node_counter += 1 
-            if node_counter > self.__listLength:
+            if node_counter >= self.__listLength:
                 return -1
             previous_node = current_node
             current_node = current_node.getNextNode()
@@ -124,6 +124,7 @@ class LinkedList:
             self.__headNode = current_node.getNextNode()
         else:
             previous_node.setNextNode(current_node.getNextNode())
+        self.__listLength-=1
         
         
     '''
