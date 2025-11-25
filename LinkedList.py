@@ -103,6 +103,44 @@ class LinkedList:
             
 
         return current_node_index
+        
+    def sorted(self):
+        node_counter = 0
+        current_node = self.__headNode
+        while node_counter < self.__listLength-1:
+            if current_node.getValue()>current_node.getNextNode().getValue():
+                return False
+            current_node = current_node.getNextNode()
+            node_counter+=1
+        return True
+
+    
+    def sort(self):
+        if self.__headNode == None:
+            return 
+        
+        item_1 = self.__headNode
+        item_2 = item_1.getNextNode()
+        previous_node = item_1
+        
+        while not(self.sorted()):
+            if item_1.getValue()>item_2.getValue():
+                if item_1 == self.__headNode:
+                    self.__headNode = item_2
+                else:
+                    previous_node.setNextNode(item_2)
+                item_1.setNextNode(item_2.getNextNode())
+                item_2.setNextNode(item_1)
+            
+            previous_node = item_1 
+            item_1 = item_2
+            item_2 = item_2.getNextNode()
+            if item_2== None:
+               item_1 = self.__headNode
+               item_2 = item_1.getNextNode()
+               previous_node = item_1 
+            
+      
 
 
     def remove(self,value):
@@ -125,29 +163,3 @@ class LinkedList:
         else:
             previous_node.setNextNode(current_node.getNextNode())
         self.__listLength-=1
-        
-        
-    '''
-    def sort(self):
-      if self.__headNode == None:
-            return 
-      
-      item_1 = self.__headNode
-      item_2 = item_1.getNextNode()
-      
-      while item_2.getNextNode() != None:
-        temp = None
-        
-        if item_2.getValue()>item_1.getValue():
-          temp = item_1
-          item_1.setNextNode(item_2.getNextNode())
-          if item_1 == self.__headNode:
-            self.__headNode = item_2
-          item_1 = item_2
-          item_2.setNextNode(item_1)
-          item_2 = temp
-        item_1 = item_2
-        item_2 = item_2.getNextNode()
-      
-'''
-    
