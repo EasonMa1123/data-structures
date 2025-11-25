@@ -103,6 +103,28 @@ class LinkedList:
             
 
         return current_node_index
+
+
+    def remove(self,value):
+        if self.__headNode == None:
+            return -1
+        
+        current_node = self.__headNode
+        current_node_value = current_node.getValue()
+        node_counter = 0
+        previous_node = None
+        while current_node_value != value:
+            node_counter += 1 
+            if node_counter > self.__listLength:
+                return -1
+            previous_node = current_node
+            current_node = current_node.getNextNode()
+            current_node_value = current_node.getValue()
+        if previous_node == None:
+            self.__headNode = current_node.getNextNode()
+        else:
+            previous_node.setNextNode(current_node.getNextNode())
+        
         
     '''
     def sort(self):
