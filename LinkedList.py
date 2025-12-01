@@ -47,6 +47,21 @@ class LinkedList:
     def listlen(self):
         return self.__listLength
     
+
+    def getNode(self,index):
+        if index > self.__listLength:
+            return -1
+        current_node = self.__headNode
+        current_node_index = 0
+        
+        while current_node_index < index:
+            current_node = current_node.getNextNode()
+            current_node_index+=1
+
+        return current_node
+        
+
+    
     def insertNode(self,value,index:int):
         if index > self.__listLength:
             return -1
@@ -55,12 +70,7 @@ class LinkedList:
             return -1
         
         new_node = node(value)
-        current_node = self.__headNode
-        current_node_index = 0
-        
-        while current_node_index < index:
-            current_node = current_node.getNextNode()
-            current_node_index+=1
+        current_node = self.getNode(index-1)
         
         
         pointer_node = current_node.getNextNode()
@@ -76,13 +86,7 @@ class LinkedList:
         if self.__headNode == None:
             return -1
         
-        current_node = self.__headNode
-        current_node_index = 0
-        
-        while current_node_index < index:
-            
-            current_node = current_node.getNextNode()
-            current_node_index+=1
+        current_node = self.getNode(index)
         return current_node.getValue()
     
     def findNodeIndex(self,value):
@@ -163,3 +167,24 @@ class LinkedList:
         else:
             previous_node.setNextNode(current_node.getNextNode())
         self.__listLength-=1
+
+
+    def swap(self,index1:int,index2:int):
+        if index1 > self.__listLength or index2 > self.__listLength or index1 > index2:
+            return -1
+        node1 = self.getNode(index1)
+        node1_pre = self.getNode(index1-1)
+        node1_aft = self.getNode(index1+1)
+        node2 = self.getNode(index2)
+        node2_pre = self.getNode(index2-1)
+        node2_aft = self.getNode(index2+1)
+        if index1 == 0:
+            self.__headNode = node2
+
+        node1_pre.setNextNode(node2)
+        node2.setNextNode(node1_aft)
+
+        node2_pre.setNextNode(node1)
+        node1.setNextNode(node2_aft)
+
+        
