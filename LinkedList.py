@@ -143,8 +143,6 @@ class LinkedList:
                item_1 = self.__headNode
                item_2 = item_1.getNextNode()
                previous_node = item_1 
-            
-      
 
 
     def remove(self,value):
@@ -166,25 +164,45 @@ class LinkedList:
             self.__headNode = current_node.getNextNode()
         else:
             previous_node.setNextNode(current_node.getNextNode())
+        del current_node
         self.__listLength-=1
 
 
     def swap(self,index1:int,index2:int):
         if index1 > self.__listLength or index2 > self.__listLength or index1 > index2:
             return -1
-        node1 = self.getNode(index1)
-        node1_pre = self.getNode(index1-1)
-        node1_aft = self.getNode(index1+1)
-        node2 = self.getNode(index2)
-        node2_pre = self.getNode(index2-1)
-        node2_aft = self.getNode(index2+1)
-        if index1 == 0:
-            self.__headNode = node2
+        elif index2-index1 > 1:  
+            node1 = self.getNode(index1)
+            node1_pre = self.getNode(index1-1)
+            node1_aft = self.getNode(index1+1)
+            
+            node2 = self.getNode(index2)
+            node2_pre = self.getNode(index2-1)
+            node2_aft = self.getNode(index2+1)
+            if index1 == 0:
+                self.__headNode = node2
 
-        node1_pre.setNextNode(node2)
-        node2.setNextNode(node1_aft)
+            node1_pre.setNextNode(node2)
+            node2.setNextNode(node1_aft)
 
-        node2_pre.setNextNode(node1)
-        node1.setNextNode(node2_aft)
+            node2_pre.setNextNode(node1)
+            node1.setNextNode(node2_aft)
+        else:
+            node1 = self.getNode(index1)
+            node1_pre = self.getNode(index1-1)
+            node2 = self.getNode(index2)
+            node2_aft = self.getNode(index2+1)
 
-        
+            node1_pre.setNextNode(node2)
+            node2.setNextNode(node1)
+            node1.setNextNode(node2_aft)
+
+    def rotate(self):
+        top = self.__listLength-1
+        bottom = 0
+        while top >= bottom:
+            
+
+            self.swap(bottom,top)
+            top -= 1
+            bottom +=1
