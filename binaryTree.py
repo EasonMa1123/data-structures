@@ -42,39 +42,43 @@ class Tree:
                 return
             else:
                 self.placeNode(top.getRight(),value)
-    def PreOrderPrintTree(self,root=None,first = True):
+    def PreOrderPrintTree(self,root=None,first = True,array=[]):
         
         if root == None and first:
             root = self.__root
         
         if root != None:
-            print(root.getValue())
-            self.PreOrderPrintTree(root.getLeft(),False)
+            array.append(root.getValue())
             
-            self.PreOrderPrintTree(root.getRight(),False)    
-
-    def InOrderPrintTree(self,root=None,first = True):
-        
-        if root == None and first:
-            root = self.__root
-        
-        if root != None:
+            self.PreOrderPrintTree(root.getLeft(),False,array)
             
-            self.InOrderPrintTree(root.getLeft(),False)
-            print(root.getValue())
-            self.InOrderPrintTree(root.getRight(),False)  
-
-    def PostOrderPrintTree(self,root=None,first = True):
+            self.PreOrderPrintTree(root.getRight(),False,array)    
+        return array
+    def InOrderPrintTree(self,root=None,first = True,array=[]):
         
         if root == None and first:
             root = self.__root
         
         if root != None:
             
-            self.PostOrderPrintTree(root.getLeft(),False)
+            self.InOrderPrintTree(root.getLeft(),False,array)
+            array.append(root.getValue())
             
-            self.PostOrderPrintTree(root.getRight(),False)       
-            print(root.getValue())   
+            self.InOrderPrintTree(root.getRight(),False,array)  
+        return array
+    def PostOrderPrintTree(self,root=None,first = True,array=[]):
+        
+        if root == None and first:
+            root = self.__root
+        
+        if root != None:
+            
+            self.PostOrderPrintTree(root.getLeft(),False,array)
+            
+            self.PostOrderPrintTree(root.getRight(),False,array)     
+            array.append(root.getValue())  
+              
+        return array
     def getLevel(self,target,root="head",level=0):
         if root == "head":
             root = self.__root
