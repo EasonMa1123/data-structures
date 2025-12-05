@@ -97,16 +97,48 @@ class Tree:
 
         return self.getLevel(target,root.getRight(),  level + 1)
 
-    def printTree(self,node="None",level = 0):
-        
-        if node == "None":
-            node = self.__root
-        
-        if node != None:
-            self.printTree(node.getLeft(), level + 1)
+    def printTree(self):
+        root = self.__root
+        if root is None:
+            print("<empty tree>")
+            return
+
+        def recurse(node, prefix="", is_left=True):
+            if node is None:
+                return
             
-            print(' ' * 4 * level + '-> ' + str(node.getValue()))
-            self.printTree(node.getRight(), level + 1)
+            # Print node
+            connector = "├── " if is_left else "└── "
+            print(prefix + connector + str(node.getValue()))
+
+            # Determine next prefixes
+            new_prefix = prefix + ("│   " if is_left else "    ")
+
+            left = node.getLeft()
+            right = node.getRight()
+
+            # Print children
+            if left or right:
+                if left:
+                    recurse(left, new_prefix, True)
+                else:
+                    print(new_prefix + "├── <None>")
+
+                if right:
+                    recurse(right, new_prefix, False)
+                else:
+                    print(new_prefix + "└── <None>")
+
+        # Root printed without connector
+        print(str(root.getValue()))
+        
+        left = root.getLeft()
+        right = root.getRight()
+
+        if left:
+            recurse(left, "", True)
+        if right:
+            recurse(right, "", False)
     
     def depth(self,root = "None"):
         if root == "None":
@@ -118,3 +150,4 @@ class Tree:
         rdepth = self.depth(root.getRight())
 
         return max(ldepth, rdepth) + 1
+
