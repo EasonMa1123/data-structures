@@ -10,10 +10,10 @@ class TreeNode:
     def right(self,node):
         self.__right = node
 
-    def check_left(self):
+    def getLeft(self):
         return self.__left
     
-    def check_right(self):
+    def getRight(self):
         return self.__right
     
     def getValue(self):
@@ -31,17 +31,17 @@ class Tree:
 
     def placeNode(self,top,value):
         if value<top.getValue():
-            if top.check_left() == None:
+            if top.getLeft() == None:
                 top.left(TreeNode(value))
                 return
             else:
-                self.placeNode(top.check_left(),value)
+                self.placeNode(top.getLeft(),value)
         elif value>top.getValue():
-            if top.check_right() == None:
+            if top.getRight() == None:
                 top.right(TreeNode(value))
                 return
             else:
-                self.placeNode(top.check_right(),value)
+                self.placeNode(top.getRight(),value)
     def PreOrderPrintTree(self,root=None,first = True):
         
         if root == None and first:
@@ -49,9 +49,10 @@ class Tree:
         
         if root != None:
             print(root.getValue())
-            self.PreOrderPrintTree(root.check_left(),False)
+            self.PreOrderPrintTree(root.getLeft(),False)
             
-            self.PreOrderPrintTree(root.check_right(),False)       
+            self.PreOrderPrintTree(root.getRight(),False)    
+
     def InOrderPrintTree(self,root=None,first = True):
         
         if root == None and first:
@@ -59,9 +60,10 @@ class Tree:
         
         if root != None:
             
-            self.InOrderPrintTree(root.check_left(),False)
+            self.InOrderPrintTree(root.getLeft(),False)
             print(root.getValue())
-            self.InOrderPrintTree(root.check_right(),False)       
+            self.InOrderPrintTree(root.getRight(),False)  
+
     def PostOrderPrintTree(self,root=None,first = True):
         
         if root == None and first:
@@ -69,7 +71,46 @@ class Tree:
         
         if root != None:
             
-            self.PostOrderPrintTree(root.check_left(),False)
+            self.PostOrderPrintTree(root.getLeft(),False)
             
-            self.PostOrderPrintTree(root.check_right(),False)       
-            print(root.getValue())
+            self.PostOrderPrintTree(root.getRight(),False)       
+            print(root.getValue())   
+    def getLevel(self,target,root="head",level=0):
+        if root == "head":
+            root = self.__root
+
+        if root is None:
+            return -1
+
+
+        if root.getValue() == target:
+            return level
+
+
+        leftLevel = self.getLevel(target,root.getLeft(),  level + 1)
+        if leftLevel != -1:
+            return leftLevel
+
+        return self.getLevel(target,root.getRight(),  level + 1)
+
+    def printTree(self,node="None",level = 0):
+        
+        if node == "None":
+            node = self.__root
+        
+        if node != None:
+            self.printTree(node.getLeft(), level + 1)
+            
+            print(' ' * 4 * level + '-> ' + str(node.getValue()))
+            self.printTree(node.getRight(), level + 1)
+    
+    def depth(self,root = "None"):
+        if root == "None":
+            root = self.__root
+        if root is None:
+            return -1
+
+        ldepth = self.depth(root.getLeft())
+        rdepth = self.depth(root.getRight())
+
+        return max(ldepth, rdepth) + 1
