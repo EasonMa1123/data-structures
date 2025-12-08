@@ -25,8 +25,10 @@ class queue:
             for i in range(self.__size):
                 if i+1 < self.__size:
                     self.__arr[i] = self.__arr[i+1]
+                    
                 elif i+1 == self.__size:
                     self.__arr[i] = None
+                    self.__endPointerPosition -=1
             return item
         
     def printQueue(self):
