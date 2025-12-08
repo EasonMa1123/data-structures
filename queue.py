@@ -11,8 +11,7 @@ class queue:
         if self.__endPointerPosition<self.__size:
             self.__arr[self.__endPointerPosition] = value
             self.__endPointerPosition +=1
-            if self.__endPointerPosition > self.__size:
-                self.__endPointerPosition = 0
+
         else:
             return -1
         
@@ -33,3 +32,12 @@ class queue:
         
     def printQueue(self):
         return self.__arr
+    
+    def getTail(self):
+        if self.__endPointerPosition < self.__size:
+            return self.__arr[self.__endPointerPosition]
+        else:
+            return "Overflow"
+
+    def getHead(self):
+        return self.__arr[self.__headPointerPosition]
