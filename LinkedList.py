@@ -120,29 +120,64 @@ class LinkedList:
 
     
     def sort(self):
-        if self.__headNode == None:
-            return 
+        if self.__headNode is None or self.__headNode.getNextNode() is None:
+            return
         
-        item_1 = self.__headNode
-        item_2 = item_1.getNextNode()
-        previous_node = item_1
+        self.__headNode = self.__merge_sort(self.__headNode)
+
+        # After sorting, update lastNode.
+        current = self.__headNode
+        while current.getNextNode() is not None:
+            current = current.getNextNode()
+        self.__lastNode = current
+
+
+    def __merge_sort(self, head):
+        if head is None or head.getNextNode() is None:
+            return head
         
-        while not(self.sorted()):
-            if item_1.getValue()>item_2.getValue():
-                if item_1 == self.__headNode:
-                    self.__headNode = item_2
-                else:
-                    previous_node.setNextNode(item_2)
-                item_1.setNextNode(item_2.getNextNode())
-                item_2.setNextNode(item_1)
-            
-            previous_node = item_1 
-            item_1 = item_2
-            item_2 = item_2.getNextNode()
-            if item_2== None:
-               item_1 = self.__headNode
-               item_2 = item_1.getNextNode()
-               previous_node = item_1 
+        middle = self.__get_middle(head)
+        next_to_middle = middle.getNextNode()
+        middle.setNextNode(None)
+
+        left = self.__merge_sort(head)
+        right = self.__merge_sort(next_to_middle)
+
+        sorted_list = self.__sorted_merge(left, right)
+        return sorted_list
+
+
+    def __sorted_merge(self, a, b):
+        if a is None:
+            return b
+        if b is None:
+            return a
+        
+        if a.getValue() <= b.getValue():
+            result = a
+            result.setNextNode(self.__sorted_merge(a.getNextNode(), b))
+        else:
+            result = b
+            result.setNextNode(self.__sorted_merge(a, b.getNextNode()))
+        
+        return result
+
+
+    def __get_middle(self, head):
+        if head is None:
+            return head
+        
+        slow = head
+        fast = head.getNextNode()
+
+        while fast is not None:
+            fast = fast.getNextNode()
+            if fast is not None:
+                slow = slow.getNextNode()
+                fast = fast.getNextNode()
+
+        return slow
+
 
 
     def remove(self,value):
