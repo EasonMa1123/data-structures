@@ -29,6 +29,28 @@ class Tree:
         else:
             self.placeNode(self.__root,value)
 
+    def addNodeObject(self,node):
+        if self.__root == None:
+            self.__root = node
+        else:
+            self.placeNodeObject(self.__root,node)
+
+    def placeNodeObject(self,top,node):
+        value = node.getvalue()
+        if value<top.getValue():
+            if top.getLeft() == None:
+                top.left(TreeNode(value))
+                return
+            else:
+                self.placeNode(top.getLeft(),node)
+        elif value>top.getValue():
+            if top.getRight() == None:
+                top.right(TreeNode(value))
+                return
+            else:
+                self.placeNode(top.getRight(),node)
+
+
     def placeNode(self,top,value):
         if value<top.getValue():
             if top.getLeft() == None:
@@ -139,6 +161,21 @@ class Tree:
             recurse(left, "", True)
         if right:
             recurse(right, "", False)
+
+    def getNode(self,value,root = None,first = True):
+        if root == None and first:
+            root = self.__root
+        
+        if root != None:
+            
+            if root.getValue() == value:
+                return root
+            self.getNode(value,root.getLeft(),False)
+            if root.getLeft().getValue() == value:
+                return root.getLeft()
+            self.getNode(value,root.getRight(),False)    
+            if root.getRight().getValue() == value:
+                return root.getRight()
     
     def depth(self,root = "None"):
         if root == "None":
@@ -151,3 +188,8 @@ class Tree:
 
         return max(ldepth, rdepth) + 1
 
+    def remove(self,value):
+        temp_tree = Tree()
+        temp_tree.addNodeObject(self.getNode(value))
+        max_value = temp_tree.InOrderPrintTree()[-1]
+        
